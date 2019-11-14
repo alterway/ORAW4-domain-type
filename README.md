@@ -1,4 +1,4 @@
-# ORAW4-domain-type
+# ORAW4 domain type
 
 This repository aims to classify french issues in an unsupervised manner.
 
