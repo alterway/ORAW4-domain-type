@@ -1,0 +1,68 @@
+swagger: "2.0"
+info:
+  description: This applies Kmean clustering on texts
+  version: "1.0.0"
+  title: domain-type
+  contact:
+    email: damien.gilles@alterway.fr
+host: 127.0.0.1:8080
+schemes:
+- http
+paths:
+  /train:
+    get:
+      description: Train a KMean model
+      produces:
+      - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "params"
+        required: true
+        schema:
+          type: object
+          required:
+            - Dataset
+            - StopWords
+          properties:
+            Dataset:
+              type: string
+              description: url to a csv file with a column named text
+            StopWords:
+              type: string
+              description: url to a csv file with a column named stop_words
+            lang:
+              type: string
+              description: lang fr en or any supported by the python package stop_words
+      responses:
+        200:
+          description: Model id
+        400:
+          description: dataset query parameter is required
+  /predict:
+    get:
+      description: Predict the group
+      produces:
+      - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "params"
+        required: true
+        schema:
+          type: object
+          required:
+            - text
+            - model_id
+          properties:
+            text:
+              type: string
+              description: Test to be classified
+            model_id:
+              type: integer
+              description: Model id returned by /train
+      responses:
+        200:
+          description: Class id
+        400:
+          description: dataset query parameter is required
